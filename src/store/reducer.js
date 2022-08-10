@@ -1,8 +1,9 @@
-import { SET_TODO, ADD_TODO, DELETE_TODO } from "./constants"
+import { SET_TODO, ADD_TODO, DELETE_TODO, TOOGLE_TODO, TOOGLEALL_TODO } from "./constants"
 
 const initState = {
     todos: [{ "title": "Html css", "completed": false }, { "title": "javascript", "completed": true }],
-    todoInput: ''
+    todoInput: '',
+    editIndex: null,
 }
 
 function reducer(state, action) {
@@ -13,16 +14,31 @@ function reducer(state, action) {
                 todoInput: action.payload
             }
         case ADD_TODO:
+            const TodosAfterAdd = [...state.todos]
+            TodosAfterAdd.push({ title: action.payload, completed: false })
             return {
                 ...state,
-                todos: [...state.todos, action.payload]
+                todos: TodosAfterAdd
             }
         case DELETE_TODO:
-            const newTodos = [...state.todos]
-            newTodos.splice(action.payload, 1)
+            const TodosAfterDelete = [...state.todos]
+            TodosAfterDelete.splice(action.payload, 1)
             return {
                 ...state,
-                todos: newTodos
+                todos: TodosAfterDelete
+            }
+        case TOOGLE_TODO:
+            const todo = state.todos[action.payload]
+            todo.completed = !todo.completed
+            return {
+                ...state,
+            }
+        case TOOGLEALL_TODO:
+            const TodosAfterToogleAll = [...state.todos]
+            TodosAfterToogleAll.forEach(todo => todo.completed = action.payload)
+            return {
+                ...state,
+                todos: TodosAfterToogleAll
             }
         default:
             throw new Error("Invalid action")
