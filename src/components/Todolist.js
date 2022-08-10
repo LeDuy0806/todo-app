@@ -1,17 +1,15 @@
-import { useStore, actions } from "../store";
-import { useRef } from "react";
 import TodoItem from "./TodoItem";
+import { actions } from "../store";
 
-function Todolist({ todos }) {
-    // const [state, dispatch] = useStore();
-    // const { todos, todoInput } = state;
-    console.log(todos)
+function Todolist({ todos, dispatch }) {
     return (
         <section className="main">
             <input
                 id="toggle-all"
                 className="toggle-all"
                 type="checkbox"
+                checked={todos.every(todo => todo.completed) && 'checked'}
+                onChange={(e) => dispatch(actions.toggleAllTodo(e.target.checked))}
             />
             <label htmlFor="toggle-all">Mark all as complete</label>
             <ul className="todo-list">
@@ -20,6 +18,7 @@ function Todolist({ todos }) {
                         key={index}
                         todo={todo}
                         index={index}
+                        dispatch={dispatch}
                     />)
                 })}
             </ul>

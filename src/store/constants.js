@@ -1,3 +1,5 @@
 export const SET_TODO = 'set'
 export const ADD_TODO = 'add'
 export const DELETE_TODO = 'delete'
+export const TOOGLE_TODO = 'toogle'
+export const TOOGLEALL_TODO = 'toogleall'
