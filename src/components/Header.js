@@ -1,9 +1,9 @@
 import { useRef } from "react";
 import { actions } from "../store";
 
-function Header({ dispatch, todoInput }) {
-
+function Header({ dispatch, todoInput, editIndex }) {
     const inputRef = useRef()
+
     const handleAdd = (e) => {
         if (e.keyCode === 13) {
             dispatch(actions.addTodo(todoInput.trim()));
@@ -20,7 +20,7 @@ function Header({ dispatch, todoInput }) {
                 type="text"
                 className="new-todo"
                 placeholder="What needs to be done?"
-                value={todoInput}
+                value={editIndex === null ? todoInput : ''}
                 autoFocus
                 onChange={(e) => {
                     dispatch(actions.setTodo(e.target.value));
